@@ -40,5 +40,5 @@ plugins {
     alias(libs.plugins.room) apply false
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.nowinandroid.root)
-    id("io.github.baole.koarchtest") version "0.6.1"
+    id("io.github.baole.konture") version "0.6.3"
 }
