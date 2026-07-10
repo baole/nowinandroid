@@ -17,6 +17,7 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+        mavenLocal()
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -32,6 +33,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
     repositories {
+        mavenLocal()
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -81,6 +83,8 @@ include(":lint")
 include(":sync:work")
 include(":sync:sync-test")
 include(":ui-test-hilt-manifest")
+include(":konture-test")
+
 
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
     """
