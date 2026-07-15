@@ -333,7 +333,7 @@ fun NiaCatalog() {
                 }
                 item { Text("Navigation", Modifier.padding(top = 16.dp)) }
                 item {
-                    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
+                    var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
                     val items = listOf("For you", "Saved", "Interests")
                     val icons = listOf(
                         NiaIcons.UpcomingBorder,
@@ -362,7 +362,9 @@ fun NiaCatalog() {
                                 },
                                 label = { Text(item) },
                                 selected = selectedItem == index,
-                                onClick = { selectedItem = index },
+                                onClick = {
+                                    selectedItem = if (selectedItem == index) null else index
+                                },
                             )
                         }
                     }
