@@ -25,6 +25,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.Constraints
 import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
+import NotificationsR as NotificationsR
 import com.google.samples.apps.nowinandroid.sync.R
 
 const val SYNC_TOPIC = "sync"
@@ -71,7 +72,7 @@ private fun Context.syncWorkNotification(): Notification {
         SYNC_NOTIFICATION_CHANNEL_ID,
     )
         .setSmallIcon(
-            com.google.samples.apps.nowinandroid.core.notifications.R.drawable.core_notifications_ic_nia_notification,
+            NotificationsR.drawable.core_notifications_ic_nia_notification,
         )
         .setContentTitle(getString(R.string.sync_work_notification_title))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)

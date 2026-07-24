@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.testing.TestLifecycleOwner
 import com.google.samples.apps.nowinandroid.core.testing.data.userNewsResourcesTestData
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState
+import com.google.samples.apps.nowinandroid.core.ui.R as UiR
 import com.google.samples.apps.nowinandroid.feature.bookmarks.api.R
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -131,7 +132,7 @@ class BookmarksScreenTest {
         composeTestRule
             .onAllNodesWithContentDescription(
                 composeTestRule.activity.getString(
-                    com.google.samples.apps.nowinandroid.core.ui.R.string.core_ui_unbookmark,
+                    UiR.string.core_ui_unbookmark,
                 ),
             ).filter(
                 hasAnyAncestor(
