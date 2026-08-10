@@ -37,6 +37,9 @@ class FeatureDecouplingArchitectureTest {
                 "okhttp3..",
                 "dagger..",
                 "javax.inject..",
+                "android..",
+                "androidx..",
+                "coil..",
                 ""
             )
             .check()
@@ -52,7 +55,8 @@ class FeatureDecouplingArchitectureTest {
                 "kotlinx..",
                 "androidx.room..",
                 "dagger..",
-                "javax.inject.."
+                "javax.inject..",
+                "android.."
             )
             .check()
     }

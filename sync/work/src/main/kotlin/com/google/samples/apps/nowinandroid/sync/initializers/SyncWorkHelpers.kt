@@ -25,7 +25,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.Constraints
 import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
-import NotificationsR as NotificationsR
+import com.google.samples.apps.nowinandroid.core.notifications.R as NotificationsR
 import com.google.samples.apps.nowinandroid.sync.R
 
 const val SYNC_TOPIC = "sync"
