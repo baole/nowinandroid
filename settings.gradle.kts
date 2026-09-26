@@ -31,7 +31,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.github.baole.konture.settings") version "0.7.7"
+    id("io.github.baole.konture") version "1.0.1"
 }
 
 dependencyResolutionManagement {

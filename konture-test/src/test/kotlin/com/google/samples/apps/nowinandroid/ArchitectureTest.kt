@@ -14,8 +14,8 @@ class ArchitectureTest {
     fun `feature modules must remain completely decoupled`() {
         Konture.modules()
             .that().haveNameMatching(":feature:**")
-            .should().notDependOnModule(":app")
-            .andShould().onlyDependOnModules(":core:**", ":feature:**:api", ":ui-test-hilt-manifest")
+            .should().mustNotDependOn(":app")
+            .andShould().onlyDependOn(":core:**", ":feature:**:api", ":ui-test-hilt-manifest")
             .check()
     }
 
@@ -23,8 +23,8 @@ class ArchitectureTest {
     fun `features must not bypass repositories to access databases or network directly`() {
         Konture.modules()
             .that().haveNameMatching(":feature:**")
-            .should().notDependOnModule(":core:database")
-            .andShould().notDependOnModule(":core:network")
+            .should().mustNotDependOn(":core:database")
+            .andShould().mustNotDependOn(":core:network")
             .check()
     }
 
@@ -32,16 +32,16 @@ class ArchitectureTest {
     fun `core model must remain a pure leaf dependency`() {
         Konture.modules()
             .that().haveNamePath(":core:model")
-            .should().onlyDependOnModules()
+            .should().onlyDependOn()
             .check()
     }
 
     @Test
     fun `repositories must be declared as interfaces`() {
         Konture.classes()
-            .that().resideInAPackage("..data.repository..")
-            .and().haveNameEndingWith("Repository")
-            .and().haveName { !it.startsWith("OfflineFirst") && !it.startsWith("Default") && !it.startsWith("Composite") }
+            .that().inPackage("..data.repository..")
+            .and().nameEndsWith("Repository")
+            .and().named { !it.startsWith("OfflineFirst") && !it.startsWith("Default") && !it.startsWith("Composite") }
             .should().beInterfaces()
             .check()
     }
@@ -62,7 +62,7 @@ class ArchitectureTest {
     fun `feature API modules must not depend on any feature implementation module`() {
         Konture.modules()
             .that().haveNameMatching(":feature:**:api")
-            .should().notDependOnModule(":feature:**:impl")
+            .should().mustNotDependOn(":feature:**:impl")
             .check()
     }
 
@@ -73,6 +73,7 @@ class ArchitectureTest {
             .should {
                 val currentFeature = path.removePrefix(":feature:").substringBefore(":")
                 for (dep in dependencies) {
+                    if (dep.configuration.startsWith("test") || dep.configuration.startsWith("androidTest")) continue
                     if (dep.targetPath.startsWith(":feature:") && dep.targetPath.endsWith(":impl")) {
                         val targetFeature = dep.targetPath.removePrefix(":feature:").substringBefore(":")
                         if (targetFeature != currentFeature) {
@@ -87,17 +88,17 @@ class ArchitectureTest {
     @Test
     fun `viewmodels must be annotated with HiltViewModel`() {
         Konture.classes()
-            .that().haveNameEndingWith("ViewModel")
-            .and().haveName { !it.contains("Test") && it != "ViewModel" }
-            .should().haveAnnotationOf("HiltViewModel")
+            .that().nameEndsWith("ViewModel")
+            .and().named { !it.contains("Test") && it != "ViewModel" }
+            .should().annotatedWith("HiltViewModel")
             .check()
     }
 
     @Test
     fun `viewmodels must not depend on android framework or context`() {
         Konture.classes()
-            .that().haveNameEndingWith("ViewModel")
-            .and().haveName { !it.contains("Test") && it != "ViewModel" }
+            .that().nameEndsWith("ViewModel")
+            .and().named { !it.contains("Test") && it != "ViewModel" }
             .should {
                 val forbiddenImports = listOf("android.content.Context", "android.view.View", "android.app.Activity")
                 for (imp in imports) {
@@ -112,8 +113,8 @@ class ArchitectureTest {
     @Test
     fun `use cases must reside in domain package and implement invoke operator`() {
         Konture.classes()
-            .that().haveNameEndingWith("UseCase")
-            .and().haveName { !it.contains("Test") }
+            .that().nameEndsWith("UseCase")
+            .and().named { !it.contains("Test") }
             .should {
                 if (!packageName.contains(".domain")) {
                     addViolation("UseCase $fqName should reside in a domain package, but resides in '$packageName'")

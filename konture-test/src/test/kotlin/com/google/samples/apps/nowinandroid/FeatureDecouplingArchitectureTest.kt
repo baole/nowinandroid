@@ -25,7 +25,7 @@ class FeatureDecouplingArchitectureTest {
     @Test
     fun `network layers and database layers must remain strictly isolated from each other`() {
         Konture.classes()
-            .that().resideInAPackage("..core.network..")
+            .that().inPackage("..core.network..")
             .should().onlyDependOnClassesInAnyPackage(
                 "..core.network..",
                 "..core.model..",
@@ -45,7 +45,7 @@ class FeatureDecouplingArchitectureTest {
             .check()
 
         Konture.classes()
-            .that().resideInAPackage("..core.database..")
+            .that().inPackage("..core.database..")
             .should().onlyDependOnClassesInAnyPackage(
                 "..core.database..",
                 "..core.model..",
